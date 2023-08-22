@@ -8,14 +8,14 @@ namespace CleanCodeLabb
 {
     internal class PlayerData
     {
-        int totalGuess;
+        int totalNumberOfGuesses;
 
 
         public PlayerData(string name, int guesses)
         {
             PlayerName = name;
             NumberOfGames = 1;
-            totalGuess = guesses;
+            totalNumberOfGuesses = guesses;
         }
 
         public string PlayerName { get; private set; }
@@ -23,13 +23,13 @@ namespace CleanCodeLabb
 
         public void Update(int guesses)
         {
-            totalGuess += guesses;
+            totalNumberOfGuesses += guesses;
             NumberOfGames++;
         }
 
-        public double Average()
+        public double CalculateAverage()
         {
-            return (double)totalGuess / NumberOfGames;
+            return (double)totalNumberOfGuesses / NumberOfGames;
         }
 
         

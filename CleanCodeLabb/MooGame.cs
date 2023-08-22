@@ -3,37 +3,81 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CleanCodeLabb.Interfaces;
 
 namespace CleanCodeLabb
 {
-    internal class MooGame
+    internal class MooGame : IGame
     {
-        public MooGame() 
+        private string gameObjective;
+        private int cows, bulls;
+
+        public string? CheckedGuess { get; private set; }
+        public int NumberOfGuesses { get; private set; }
+
+        public string NewGame()
         {
-            
+            gameObjective = string.Empty;
+            CreateGameObjective();
+            ResetNumberOfGuesses();
+            return "New Game:\n";
         }
 
-        public void NewGame()
-        {
-
-        }
-
-        public string MakeGoal()
+        public void CreateGameObjective()
         {
             Random randomGenerator = new Random();
-            string goal = "";
-            for (int i = 0; i < 4; i++)
+            while (gameObjective.Length < 4)
             {
-                int random = randomGenerator.Next(10);
-                string randomDigit = "" + random;
-                while (goal.Contains(randomDigit))
+                string randomDigit = randomGenerator.Next(10).ToString();
+                if (!gameObjective.Contains(randomDigit)) 
                 {
-                    random = randomGenerator.Next(10);
-                    randomDigit = "" + random;
+                    gameObjective += randomDigit; 
                 }
-                goal = goal + randomDigit;
             }
-            return goal;
         }
+        private void ResetNumberOfGuesses()
+        {
+            NumberOfGuesses = 0;
+        }
+
+        public void CheckGameResult(string guess)
+        {
+            NumberOfGuesses++;
+            cows = 0; 
+            bulls = 0;
+
+            var matchingNumbers = guess.Where(guessItem => 
+                 gameObjective.Any(objItem => guessItem == objItem)).ToList();
+
+            foreach (char c in matchingNumbers)
+            {
+                TranslateToBullsAndCows(c, guess);
+            }
+            
+            CheckedGuess = "BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
+        }
+
+        private void TranslateToBullsAndCows(char c, string guess)
+        {
+            if (gameObjective.IndexOf(c) == guess.IndexOf(c))
+            {
+                bulls++;
+            }
+            else
+            {
+                cows++;
+            }
+        }
+
+        public string CreateWinMessage()
+        {
+            return "Correct, it took " + NumberOfGuesses + " guesses\nContinue?";
+        }
+
+        public string Cheat()
+        {
+            return gameObjective;
+        }
+
     }
 }
