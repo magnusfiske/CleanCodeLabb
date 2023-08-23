@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace CleanCodeLabb.Interfaces
 {
-    internal interface IUI
+    internal interface IIO
     {
-        string GetString();
-        void PutString(string value);
-        void Exit();
-        void Clear();
-
+        string GenerateTopList();
+        List<Player> LoadResults();
+        void SaveResult(string playerName, int numberOfGuesses);
     }
 }

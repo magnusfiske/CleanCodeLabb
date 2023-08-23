@@ -12,18 +12,13 @@ namespace CleanCodeLabb
         private IUI ui;
         private IGame game;
         private string? playerName;
-        private IDAO dAO;
+        private IIO io;
 
-        public GameController(IUI ui, IGame game, IDAO dAO)
+        public GameController(IUI ui, IGame game, IIO io)
         {
             this.ui = ui;
             this.game = game;
-            this.dAO = dAO;
-        }
-
-        private void SetCurrentGame(IGame game)
-        {
-            this.game = game;
+            this.io = io;
         }
 
         public void Run()
@@ -34,6 +29,20 @@ namespace CleanCodeLabb
                 GameLoop();
             } while (CheckForUserQuit());
         }
+        private void InitializeGame()
+        {
+            ui.PutString("Enter your user name:\n");
+            playerName = ui.GetString();
+            ui.PutString("Choose game: \n1. Moo \n2. Master Mind");
+            if (ui.GetString().Substring(0,1) == "1")
+            {
+                game.SetStrategy(new MooGameStrategy());
+            }
+            else
+            {
+                game.SetStrategy(new MasterMindStrategy());
+            }
+        }
 
         private void GameLoop()
         {
@@ -42,31 +51,17 @@ namespace CleanCodeLabb
             string input;
             do
             {
-                input = ui.GetString().Trim();
+                input = ui.GetString().Trim().Remove(4);
                 ui.PutString(input + "\n");
-                game.CheckGameResult(input);
+                game.CheckResult(input);
                 ui.PutString(game.CheckedGuess + "\n");
 
-            } while (game.CheckedGuess != "BBBB,");
-            dAO.SaveResult(playerName, game.NumberOfGuesses);
-            ui.PutString(dAO.GenerateTopList());
+            } while (!game.IsWin());
+            io.SaveResult(playerName, game.NumberOfGuesses);
+            ui.PutString(io.GenerateTopList());
             ui.PutString(game.CreateWinMessage());
         }
 
-        private void InitializeGame()
-        {
-            ui.PutString("Enter your user name:\n");
-            playerName = ui.GetString();
-            ui.PutString("Choose game: \n1. Moo \n2. Master Mind");
-            if (ui.GetString().Substring(0,1) == "1")
-            {
-                SetCurrentGame(new MooGame());
-            }
-            else
-            {
-                SetCurrentGame(new MasterMindGame());
-            }
-        }
 
         private bool CheckForUserQuit()
         {

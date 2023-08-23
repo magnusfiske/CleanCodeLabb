@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace CleanCodeLabb
 {
-    internal class PlayerData
+    internal class Player
     {
         int totalNumberOfGuesses;
 
 
-        public PlayerData(string name, int guesses)
+        public Player(string name, int guesses)
         {
             PlayerName = name;
             NumberOfGames = 1;
@@ -35,7 +35,7 @@ namespace CleanCodeLabb
         
         public override bool Equals(Object p)
         {
-            return PlayerName.Equals(((PlayerData)p).PlayerName);
+            return PlayerName.Equals(((Player)p).PlayerName);
         }
 
 

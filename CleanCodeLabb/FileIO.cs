@@ -8,33 +8,33 @@ using CleanCodeLabb.Interfaces;
 
 namespace CleanCodeLabb
 {
-    internal class FileDAO : IDAO
+    internal class FileIO : IIO
     {
         public string GenerateTopList()
         {
-            List<PlayerData> results = LoadResults();
+            List<Player> results = LoadResults();
             results.Sort((p1, p2) => p1.CalculateAverage().CompareTo(p2.CalculateAverage()));
             string topList = "Player   games average\n";
-            foreach (PlayerData p in results)
+            foreach (Player p in results)
             {
                 topList += string.Format("{0,-9}{1,5:D}{2,9:F2}", p.PlayerName, p.NumberOfGames, p.CalculateAverage() + "\n");
             }
             return topList;
         }
 
-        public List<PlayerData> LoadResults()
+        public List<Player> LoadResults()
         {
             try
             {
                 StreamReader input = new StreamReader("result.txt");
-                List<PlayerData> results = new List<PlayerData>();
+                List<Player> results = new List<Player>();
                 string? line;
                 while ((line = input.ReadLine()) != null)
                 {
                     string[] nameAndScore = line.Split(new string[] { "#&#" }, StringSplitOptions.None);
                     string name = nameAndScore[0];
                     int guesses = Convert.ToInt32(nameAndScore[1]);
-                    PlayerData pd = new PlayerData(name, guesses);
+                    Player pd = new Player(name, guesses);
                     int pos = results.IndexOf(pd);
                     if (pos < 0)
                     {

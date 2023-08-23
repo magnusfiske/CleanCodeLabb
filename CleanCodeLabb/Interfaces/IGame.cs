@@ -10,10 +10,11 @@ namespace CleanCodeLabb.Interfaces
     {
         string? CheckedGuess { get; }
         int NumberOfGuesses { get; }
-        public string NewGame();
-        public void CreateGameObjective();
-        public void CheckGameResult(string guess);
-        public string CreateWinMessage();
-        public string Cheat();
+        void SetStrategy(IGuessingGameStrategy strategy);
+        string NewGame();
+        void CheckResult(string guess);
+        bool IsWin();
+        string CreateWinMessage();
+        string Cheat();
     }
 }

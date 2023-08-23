@@ -6,9 +6,9 @@ using System.Security.Cryptography.X509Certificates;
 
 
 
-IDAO myDAO = new FileDAO();
-IGame myGame = new MooGame();
+IIO myIo = new FileIO();
+IGame myGame = new GuessingGame();
 IUI myUI = new ConsoleUI();
-GameController myController = new GameController(myUI, myGame, myDAO);
+GameController myController = new GameController(myUI, myGame, myIo);
 
 myController.Run();
