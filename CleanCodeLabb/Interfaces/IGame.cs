@@ -8,9 +8,11 @@ namespace CleanCodeLabb.Interfaces
 {
     internal interface IGame
     {
+        bool HasStrategyOptions { get; }
         string? CheckedGuess { get; }
         int NumberOfGuesses { get; }
-        void SetStrategy(IGuessingGameStrategy strategy);
+        string GetStrategyOptions();
+        void SetStrategy(string userInput);
         string NewGame();
         void CheckResult(string guess);
         bool IsWin();

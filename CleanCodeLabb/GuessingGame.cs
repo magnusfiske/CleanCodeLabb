@@ -8,29 +8,48 @@ using CleanCodeLabb.Interfaces;
 
 namespace CleanCodeLabb
 {
-    internal class GuessingGame : IGame
+    public class GuessingGame : IGame
     {
-        private string _gameObjective;
-        //private int _rightPlaceRightValue, _wrongPlaceRightValue;
+        public string _gameObjective;
+        
         private IGuessingGameStrategy _strategy;
 
+        public bool HasStrategyOptions { get; } = true;
         public string? CheckedGuess { get; private set; }
         public int NumberOfGuesses { get; private set; }
 
-        public void SetStrategy(IGuessingGameStrategy? strategy)
+        public string GetStrategyOptions()
+        {
+            return "Choose game: \n1. Moo \n2. Master Mind";
+        }
+
+
+        public void SetStrategy(string userInput)
         { 
-            this._strategy = strategy; 
+            if (userInput == "1")
+            {
+                _strategy = new MooGameStrategy(); 
+            }
+            else if (userInput == "2")
+            {
+                _strategy = new MasterMindStrategy();
+            }
+            else
+            {
+                throw new NotImplementedException("No game matching request found");
+            }
+            
         }
 
         public string NewGame()
         {
             _gameObjective = string.Empty;
-            CreateGameObjective();
-            ResetNumberOfGuesses();
+            createGameObjective();
+            resetNumberOfGuesses();
             return "New Game:\n";
         }
 
-        private void CreateGameObjective()
+        private void createGameObjective()
         {
             Random randomGenerator = new Random();
             while (_gameObjective?.Length < 4)
@@ -42,7 +61,7 @@ namespace CleanCodeLabb
                 }
             }
         }
-        private void ResetNumberOfGuesses()
+        private void resetNumberOfGuesses()
         {
             NumberOfGuesses = 0;
         }
@@ -53,19 +72,6 @@ namespace CleanCodeLabb
             CheckedGuess = _strategy.CheckGameResult(_gameObjective, guess);
             
         }
-
-        //private void CheckPositioning(char c, string guess)
-        //{
-        //    //Behöver göras om för Mastermind. gameObjective.IndexOf(c) hittar bara första förekomsten.
-        //    if (_gameObjective.IndexOf(c) == guess.IndexOf(c))
-        //    {
-        //        _rightPlaceRightValue++;
-        //    }
-        //    else
-        //    {
-        //        _wrongPlaceRightValue++;
-        //    }
-        //}
 
         public bool IsWin()
         {

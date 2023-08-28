@@ -6,36 +6,34 @@ using System.Threading.Tasks;
 
 namespace CleanCodeLabb
 {
-    internal class Player
+    public class Player
     {
-        int totalNumberOfGuesses;
-
-
         public Player(string name, int guesses)
         {
             PlayerName = name;
             NumberOfGames = 1;
-            totalNumberOfGuesses = guesses;
+            TotalNumberOfGuesses = guesses;
         }
 
+        public int TotalNumberOfGuesses { get; private set; }
         public string PlayerName { get; private set; }
         public int NumberOfGames { get; private set; }
 
         public void Update(int guesses)
         {
-            totalNumberOfGuesses += guesses;
+            TotalNumberOfGuesses += guesses;
             NumberOfGames++;
         }
 
         public double CalculateAverage()
         {
-            return (double)totalNumberOfGuesses / NumberOfGames;
+            return (double)TotalNumberOfGuesses / NumberOfGames;
         }
 
         
-        public override bool Equals(Object p)
+        public override bool Equals(Object player)
         {
-            return PlayerName.Equals(((Player)p).PlayerName);
+            return PlayerName.Equals(((Player)player).PlayerName);
         }
 
 

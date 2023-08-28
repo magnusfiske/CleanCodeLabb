@@ -21,30 +21,32 @@ namespace CleanCodeLabb
             this.io = io;
         }
 
+
         public void Run()
         {
-            InitializeGame();
+            initializeGame();
             do
             {
-                GameLoop();
-            } while (CheckForUserQuit());
+                gameLoop();
+            } while (checkForUserContinue());
         }
-        private void InitializeGame()
+        private void initializeGame()
         {
             ui.PutString("Enter your user name:\n");
             playerName = ui.GetString();
-            ui.PutString("Choose game: \n1. Moo \n2. Master Mind");
-            if (ui.GetString().Substring(0,1) == "1")
+            ui.PutString(game.GetStrategyOptions());
+            try
             {
-                game.SetStrategy(new MooGameStrategy());
+                game.SetStrategy(ui.GetString().Substring(0, 1));
             }
-            else
-            {
-                game.SetStrategy(new MasterMindStrategy());
+            catch(Exception e) 
+            { 
+                ui.PutString(e.Message);
+                Run();
             }
         }
 
-        private void GameLoop()
+        private void gameLoop()
         {
             ui.PutString(game.NewGame());
             ui.PutString(game.Cheat());
@@ -63,11 +65,11 @@ namespace CleanCodeLabb
         }
 
 
-        private bool CheckForUserQuit()
+        private bool checkForUserContinue()
         {
             string userInput  = ui.GetString();
 
-            if (userInput.Substring(0, 1) == "n" || userInput == null || userInput == "")
+            if (userInput == "" || userInput == null ||  userInput.Substring(0, 1) == "n")
             {
                 return false;
             }

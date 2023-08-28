@@ -12,14 +12,10 @@ namespace CleanCodeLabb
     {
         public string GenerateTopList()
         {
-            List<Player> results = LoadResults();
-            results.Sort((p1, p2) => p1.CalculateAverage().CompareTo(p2.CalculateAverage()));
-            string topList = "Player   games average\n";
-            foreach (Player p in results)
-            {
-                topList += string.Format("{0,-9}{1,5:D}{2,9:F2}", p.PlayerName, p.NumberOfGames, p.CalculateAverage() + "\n");
-            }
-            return topList;
+            List<Player> resultsFromFile = LoadResults();
+            List<Player> sortedResults = sortResults(resultsFromFile);
+            
+            return printTopList(sortedResults);
         }
 
         public List<Player> LoadResults()
@@ -28,24 +24,12 @@ namespace CleanCodeLabb
             {
                 StreamReader input = new StreamReader("result.txt");
                 List<Player> results = new List<Player>();
-                string? line;
-                while ((line = input.ReadLine()) != null)
+                string? fileContent;
+
+                while ((fileContent = input.ReadLine()) != null)
                 {
-                    string[] nameAndScore = line.Split(new string[] { "#&#" }, StringSplitOptions.None);
-                    string name = nameAndScore[0];
-                    int guesses = Convert.ToInt32(nameAndScore[1]);
-                    Player pd = new Player(name, guesses);
-                    int pos = results.IndexOf(pd);
-                    if (pos < 0)
-                    {
-                        results.Add(pd);
-                    }
-                    else
-                    {
-                        results[pos].Update(guesses);
-                    }
-
-
+                    Player playerData = getPlayerFromFile(fileContent);
+                    addOrUpdatePlayer(results, playerData);
                 }
                 input.Close();
                 return results;
@@ -54,6 +38,49 @@ namespace CleanCodeLabb
             {
                 throw new IOException();
             }
+        }
+
+        private Player getPlayerFromFile(string fileContent)
+        {
+            string[] namesAndScores = splitFileContentToArray(fileContent);
+            string name = namesAndScores[0];
+            int guesses = Convert.ToInt32(namesAndScores[1]);
+            return new Player(name, guesses);
+        }
+
+        private List<Player> addOrUpdatePlayer(List<Player> results, Player playerData)
+        {
+            int pos = results.IndexOf(playerData);
+            if (pos < 0)
+            {
+                results.Add(playerData);
+            }
+            else
+            {
+                results[pos].Update(playerData.TotalNumberOfGuesses);
+            }
+            return results;
+        }
+
+        private string[] splitFileContentToArray(string fileContent)
+        {
+            return fileContent.Split(new string[] { "#&#" }, StringSplitOptions.None);
+        }
+
+        private List<Player> sortResults(List<Player> results)
+        {
+            results.Sort((p1, p2) => p1.CalculateAverage().CompareTo(p2.CalculateAverage()));
+            return results;
+        }
+
+        private string printTopList(List<Player> sortedResults)
+        {
+            string topList = "Player   games average\n";
+            foreach (Player p in sortedResults)
+            {
+                topList += string.Format("{0,-9}{1,5:D}{2,9:F2}", p.PlayerName, p.NumberOfGames, p.CalculateAverage() + "\n");
+            }
+            return topList;
         }
 
         public void SaveResult(string playerName, int numberOfGuesses)

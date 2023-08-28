@@ -37,10 +37,10 @@ namespace CleanCodeLabb
                 }
             }
 
-            return PrintCheckedGuess(rightPlaceRightValue, wrongPlaceRightValue);
+            return printCheckedGuess(rightPlaceRightValue, wrongPlaceRightValue);
         }
 
-        private string PrintCheckedGuess(int rightPlaceRightValue, int wrongPlaceRightValue)
+        private string printCheckedGuess(int rightPlaceRightValue, int wrongPlaceRightValue)
         {
             return "BBBB".Substring(0, rightPlaceRightValue) + "," + "CCCC".Substring(0, wrongPlaceRightValue);
         }

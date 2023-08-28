@@ -27,15 +27,15 @@ namespace CleanCodeLabb
         {
             _gameObjective = gameObjective;
             _guess = guess;
-            ResetCounters();
+            resetCounters();
 
-            CountRightPlaceRightValue();
-            CountWrongPlaceRightValue();
+            countRightPlaceRightValue();
+            countWrongPlaceRightValue();
 
-            return PrintCheckedGuess(_rightPlaceRightValue, _wrongPlaceRightValue);
+            return printCheckedGuess(_rightPlaceRightValue, _wrongPlaceRightValue);
         }
 
-        private void ResetCounters()
+        private void resetCounters()
         {
             _iteration = 0;
             _rightPlaceRightValue = 0;
@@ -48,7 +48,7 @@ namespace CleanCodeLabb
             }
         }
 
-        private void CountRightPlaceRightValue()
+        private void countRightPlaceRightValue()
         {
             for (int i = 0; i < 4; i++)
             {
@@ -62,7 +62,7 @@ namespace CleanCodeLabb
             }
         }
 
-        private void CountWrongPlaceRightValue()
+        private void countWrongPlaceRightValue()
         {
             for (int i = 0; i < 4; i++)
             {
@@ -77,11 +77,11 @@ namespace CleanCodeLabb
             _iteration++;
             if (_iteration < 4)
             {
-                CountWrongPlaceRightValue();
+                countWrongPlaceRightValue();
             }
         }
 
-        private string PrintCheckedGuess(int rightPlaceRightValue, int wrongPlaceRightValue)
+        private string printCheckedGuess(int rightPlaceRightValue, int wrongPlaceRightValue)
         {
             return "RRRR".Substring(0, rightPlaceRightValue) + "," + "WWWW".Substring(0, wrongPlaceRightValue);
         }
