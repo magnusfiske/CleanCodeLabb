@@ -57,7 +57,6 @@ namespace CleanCodeLabb
                 input = game.ValidateUserInput(ui.GetString().Trim());
                 ui.PutString(input + "\n");
                 ui.PutString(game.CheckResult(input));
-                //ui.PutString(game.CheckedGuess + "\n");
 
             } while (!game.IsWin());
             io.SaveResult(playerName, game.NumberOfGuesses);

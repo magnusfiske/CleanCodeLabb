@@ -26,12 +26,12 @@ public class PlayerTest
         _player.Update(5);
         _player.CalculateAverage();
 
-        Assert.AreEqual(_player.CalculateAverage(), 2.5);
+        Assert.AreEqual(2.5, _player.CalculateAverage());
     }
 
     [TestMethod]
     public void TestPlayerName()
     {
-        Assert.AreEqual(_player.PlayerName, "testPlayer");
+        Assert.AreEqual("testPlayer", _player.PlayerName);
     }
 }

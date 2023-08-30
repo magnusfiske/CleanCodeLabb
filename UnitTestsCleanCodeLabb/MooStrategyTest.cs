@@ -18,9 +18,11 @@ namespace UnitTestsCleanCodeLabb
         }
         
         [DataTestMethod]
-        [DataRow("1312", "1425", "B,C")]
-        [DataRow("1312", "3254", ",CC")]
-        [DataRow("1312", "1312", "BBBB,")]
+        [DataRow("1392", "1425", "B,C")]
+        [DataRow("1392", "3254", ",CC")]
+        [DataRow("1392", "1111", "B,CCC")]
+        [DataRow("1392", "0754", ",")]
+        [DataRow("1392", "1392", "BBBB,")]
         public void TestCheckGameResult(string goal, string input, string expected)
         {
             string actual = _game.CheckGameResult(goal, input);

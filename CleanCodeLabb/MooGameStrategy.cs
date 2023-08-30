@@ -27,9 +27,11 @@ namespace CleanCodeLabb
 
             foreach (char c in matchingItems)
             {
+                //int i = guess.IndexOf(c);
                 if (gameObjective.IndexOf(c) == guess.IndexOf(c))
                 {
                     rightPlaceRightValue++;
+                    gameObjective = gameObjective.Replace(c, '-');
                 }
                 else
                 {
