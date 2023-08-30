@@ -37,7 +37,8 @@ namespace CleanCodeLabb
             ui.PutString(game.GetStrategyOptions());
             try
             {
-                game.SetStrategy(ui.GetString().Substring(0, 1));
+                int userInput = int.Parse(ui.GetString().Substring(0,1));
+                game.SetStrategy(userInput);
             }
             catch(Exception e) 
             { 

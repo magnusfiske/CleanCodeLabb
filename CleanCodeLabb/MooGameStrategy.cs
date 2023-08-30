@@ -44,5 +44,10 @@ namespace CleanCodeLabb
         {
             return "BBBB".Substring(0, rightPlaceRightValue) + "," + "CCCC".Substring(0, wrongPlaceRightValue);
         }
+
+        public override string ToString()
+        {
+            return "Moo";
+        }
     }
 }

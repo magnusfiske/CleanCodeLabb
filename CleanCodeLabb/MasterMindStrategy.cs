@@ -85,5 +85,10 @@ namespace CleanCodeLabb
         {
             return "RRRR".Substring(0, rightPlaceRightValue) + "," + "WWWW".Substring(0, wrongPlaceRightValue);
         }
+
+        public override string ToString()
+        {
+            return "Master Mind";
+        }
     }
 }

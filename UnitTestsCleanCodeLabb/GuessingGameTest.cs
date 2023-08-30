@@ -21,7 +21,7 @@ namespace UnitTestsCleanCodeLabb
         [TestMethod]
         public void testMasterCreateGameObjective()
         {
-            _guessingGame.SetStrategy("2");
+            _guessingGame.SetStrategy(2);
             _guessingGame.NewGame();
 
             Regex regex = new Regex("^[0-5]{4}$");
@@ -32,7 +32,7 @@ namespace UnitTestsCleanCodeLabb
         [TestMethod]
         public void testMooCreateGameObjective()
         {
-            _guessingGame.SetStrategy("1");
+            _guessingGame.SetStrategy(1);
             _guessingGame.NewGame();
 
             Regex regex = new Regex(@"^(?!.*(.).*\1)\d{4}$");

@@ -13,30 +13,24 @@ namespace CleanCodeLabb
         public string _gameObjective;
         private string _checkedGuess;
         private IGuessingGameStrategy _strategy;
+        private List<IGuessingGameStrategy> _strategyList = StrategyCreator.StrategyFactory();
 
         public bool HasStrategyOptions { get; } = true;
         public int NumberOfGuesses { get; private set; }
 
         public string GetStrategyOptions()
         {
-            return "Choose game: \n1. Moo \n2. Master Mind";
+            string strategyOptions = "Choose game: \n";
+            for (int i = 0; i < _strategyList.Count; i++)
+            {
+                strategyOptions += $"{i}. {_strategyList[i].ToString()} \n";
+            }
+            return strategyOptions;
         }
 
-        public void SetStrategy(string userInput)
-        { 
-            if (userInput == "1")
-            {
-                _strategy = new MooGameStrategy(); 
-            }
-            else if (userInput == "2")
-            {
-                _strategy = new MasterMindStrategy();
-            }
-            else
-            {
-                throw new NotImplementedException("No game matching request found");
-            }
-            
+        public void SetStrategy(int userInput)
+        {
+                _strategy = _strategyList[userInput];
         }
 
         public string NewGame()
@@ -85,7 +79,6 @@ namespace CleanCodeLabb
 
         public bool IsWin()
         {
-            //ObserverPattern??
             return _checkedGuess == "BBBB," || _checkedGuess == "RRRR,";
         }
 
