@@ -33,7 +33,8 @@ namespace CleanCodeLabb
         
         public override bool Equals(Object player)
         {
-            return PlayerName.Equals(((Player)player).PlayerName);
+            Player other = (Player)player;
+            return PlayerName.Equals(other.PlayerName);
         }
 
 

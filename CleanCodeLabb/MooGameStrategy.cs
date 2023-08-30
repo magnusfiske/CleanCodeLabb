@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CleanCodeLabb
 {
-    internal class MooGameStrategy : IGuessingGameStrategy
+    public class MooGameStrategy : IGuessingGameStrategy
     {
         public int NumberOfUniqueDigitsInObjective { get; } = 10;
 

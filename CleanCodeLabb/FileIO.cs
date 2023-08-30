@@ -10,6 +10,7 @@ namespace CleanCodeLabb
 {
     internal class FileIO : IIO
     {
+        private string _separator = "#&#";
         public string GenerateTopList()
         {
             List<Player> resultsFromFile = LoadResults();
@@ -34,9 +35,20 @@ namespace CleanCodeLabb
                 input.Close();
                 return results;
             }
-            catch
+            catch (FileNotFoundException e)
             {
-                throw new IOException();
+                Console.WriteLine("Results file not found. " + e.Message);
+                return new List<Player>();
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+                return new List<Player>();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new List<Player>();
             }
         }
 
@@ -64,7 +76,7 @@ namespace CleanCodeLabb
 
         private string[] splitFileContentToArray(string fileContent)
         {
-            return fileContent.Split(new string[] { "#&#" }, StringSplitOptions.None);
+            return fileContent.Split(new string[] { _separator }, StringSplitOptions.None);
         }
 
         private List<Player> sortResults(List<Player> results)
@@ -75,10 +87,10 @@ namespace CleanCodeLabb
 
         private string printTopList(List<Player> sortedResults)
         {
-            string topList = "Player   games average\n";
+            string topList = "Player     games     average\n";
             foreach (Player p in sortedResults)
             {
-                topList += string.Format("{0,-9}{1,5:D}{2,9:F2}", p.PlayerName, p.NumberOfGames, p.CalculateAverage() + "\n");
+                topList += string.Format("{0,-9} {1,5:D} {2,9:F2}", p.PlayerName, p.NumberOfGames, p.CalculateAverage()) + "\n";
             }
             return topList;
         }
@@ -88,12 +100,16 @@ namespace CleanCodeLabb
             try
             {
                 StreamWriter output = new StreamWriter("result.txt", append: true);
-                output.WriteLine(playerName + "#&#" + numberOfGuesses);
+                output.WriteLine(playerName + _separator + numberOfGuesses);
                 output.Close();
             }
-            catch 
+            catch (IOException e)
             {
-                throw new IOException();
+                Console.WriteLine(e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
 

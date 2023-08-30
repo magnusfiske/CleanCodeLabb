@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CleanCodeLabb
 {
-    internal class MasterMindStrategy : IGuessingGameStrategy
+    public class MasterMindStrategy : IGuessingGameStrategy
     {
         private string _gameObjective;
         private string _guess;

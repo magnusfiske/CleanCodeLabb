@@ -53,10 +53,10 @@ namespace CleanCodeLabb
             string input;
             do
             {
-                input = ui.GetString().Trim().Remove(4);
+                input = game.ValidateUserInput(ui.GetString().Trim());
                 ui.PutString(input + "\n");
-                game.CheckResult(input);
-                ui.PutString(game.CheckedGuess + "\n");
+                ui.PutString(game.CheckResult(input));
+                //ui.PutString(game.CheckedGuess + "\n");
 
             } while (!game.IsWin());
             io.SaveResult(playerName, game.NumberOfGuesses);

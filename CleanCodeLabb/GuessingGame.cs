@@ -11,18 +11,16 @@ namespace CleanCodeLabb
     public class GuessingGame : IGame
     {
         public string _gameObjective;
-        
+        private string _checkedGuess;
         private IGuessingGameStrategy _strategy;
 
         public bool HasStrategyOptions { get; } = true;
-        public string? CheckedGuess { get; private set; }
         public int NumberOfGuesses { get; private set; }
 
         public string GetStrategyOptions()
         {
             return "Choose game: \n1. Moo \n2. Master Mind";
         }
-
 
         public void SetStrategy(string userInput)
         { 
@@ -61,22 +59,34 @@ namespace CleanCodeLabb
                 }
             }
         }
+
+        public string ValidateUserInput(string input)
+        {
+            int lengthOfValidGuess = 4;
+            if (input.Length < lengthOfValidGuess)
+            {
+                input += "    ";
+            }
+            return input.Remove(lengthOfValidGuess);
+        }
+
         private void resetNumberOfGuesses()
         {
             NumberOfGuesses = 0;
         }
 
-        public void CheckResult(string guess)
+        public string CheckResult(string guess)
         {
             NumberOfGuesses++;
-            CheckedGuess = _strategy.CheckGameResult(_gameObjective, guess);
+            _checkedGuess = _strategy.CheckGameResult(_gameObjective, guess);
+            return _checkedGuess;
             
         }
 
         public bool IsWin()
         {
             //ObserverPattern??
-            return CheckedGuess == "BBBB," || CheckedGuess == "RRRR,";
+            return _checkedGuess == "BBBB," || _checkedGuess == "RRRR,";
         }
 
         public string CreateWinMessage()

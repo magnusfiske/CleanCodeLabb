@@ -19,7 +19,7 @@ namespace UnitTestsCleanCodeLabb
         }
 
         [TestMethod]
-        public void testMasterMindNewGame()
+        public void testMasterCreateGameObjective()
         {
             _guessingGame.SetStrategy("2");
             _guessingGame.NewGame();
@@ -30,7 +30,7 @@ namespace UnitTestsCleanCodeLabb
         }
 
         [TestMethod]
-        public void testMooNewGame()
+        public void testMooCreateGameObjective()
         {
             _guessingGame.SetStrategy("1");
             _guessingGame.NewGame();
