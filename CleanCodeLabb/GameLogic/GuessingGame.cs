@@ -6,14 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using CleanCodeLabb.Interfaces;
 
-namespace CleanCodeLabb
+namespace CleanCodeLabb.GameLogic
 {
-    public class GuessingGame : IGame
+    public class GuessingGame : IGame, ISubject
     {
-        public string _gameObjective;
-        private string _checkedGuess;
-        private List<IGuessingGameStrategy> _strategyList = StrategyCreator.StrategyFactory();
+        public string _gameObjective = string.Empty;
+        private string _checkedGuess = string.Empty;
+        private List<IGuessingGameStrategy> _strategyList = StrategyCreator.GameStrategyFactory();
         private IGuessingGameStrategy _strategy;
+        private List<IObserver> _observers = new List<IObserver>();
 
         public bool HasStrategyOptions { get; } = true;
         public int NumberOfGuesses { get; private set; }
@@ -35,7 +36,8 @@ namespace CleanCodeLabb
 
         public void SetStrategy(int userInput)
         {
-                _strategy = _strategyList[userInput];
+            _strategy = _strategyList[userInput];
+            Notify();
         }
 
         public string NewGame()
@@ -52,7 +54,7 @@ namespace CleanCodeLabb
             while (_gameObjective?.Length < 4)
             {
                 string randomDigit = randomGenerator.Next(_strategy.NumberOfUniqueDigitsInObjective).ToString();
-                if (_strategy.IsValidNumber(randomDigit,_gameObjective))
+                if (_strategy.IsValidNumber(randomDigit, _gameObjective))
                 {
                     _gameObjective += randomDigit;
                 }
@@ -79,7 +81,7 @@ namespace CleanCodeLabb
             NumberOfGuesses++;
             _checkedGuess = _strategy.CheckGameResult(_gameObjective, guess);
             return _checkedGuess;
-            
+
         }
 
         public bool IsWin()
@@ -97,5 +99,22 @@ namespace CleanCodeLabb
             return _gameObjective;
         }
 
+        public void Attach(IObserver observer)
+        {
+            _observers.Add(observer);
+        }
+
+        public void Detach(IObserver observer)
+        {
+            _observers.Remove(observer);
+        }
+
+        public void Notify()
+        {
+            foreach (var observer in _observers)
+            {
+                observer.Update(this);
+            }
+        }
     }
 }

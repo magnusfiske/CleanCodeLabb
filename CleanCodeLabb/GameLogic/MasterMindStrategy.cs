@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanCodeLabb
+namespace CleanCodeLabb.GameLogic
 {
     public class MasterMindStrategy : IGuessingGameStrategy
     {

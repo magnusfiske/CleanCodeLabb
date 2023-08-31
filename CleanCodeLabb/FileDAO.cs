@@ -9,25 +9,17 @@ using MongoDB.Bson.IO;
 
 namespace CleanCodeLabb
 {
-    internal class FileIO : IIO
+    internal class FileDAO : IDAO
     {
         private string _separator = "#&#";
         private string _fileName;
 
-        public void SetGameForResults(string gameName)
+        public void SetResultTable(string gameName)
         { 
             _fileName = gameName + "Results.txt"; 
         }
 
-        public string GenerateTopList()
-        {
-            List<Player> resultsFromFile = LoadResults();
-            List<Player> sortedResults = sortResults(resultsFromFile);
-            
-            return printTopList(sortedResults);
-        }
-
-        public List<Player> LoadResults()
+        public List<Player> ReadAll()
         {
             try
             {
@@ -87,23 +79,7 @@ namespace CleanCodeLabb
             return fileContent.Split(new string[] { _separator }, StringSplitOptions.None);
         }
 
-        private List<Player> sortResults(List<Player> results)
-        {
-            results.Sort((p1, p2) => p1.CalculateAverage().CompareTo(p2.CalculateAverage()));
-            return results;
-        }
-
-        private string printTopList(List<Player> sortedResults)
-        {
-            string topList = "Player     games     average\n";
-            foreach (Player p in sortedResults)
-            {
-                topList += string.Format("{0,-9} {1,5:D} {2,9:F2}", p.PlayerName, p.NumberOfGames, p.CalculateAverage()) + "\n";
-            }
-            return topList;
-        }
-
-        public void SaveResult(string playerName, int numberOfGuesses)
+        public void Save(string playerName, int numberOfGuesses)
         {
             try
             {
@@ -121,5 +97,9 @@ namespace CleanCodeLabb
             }
         }
 
+        public override string ToString()
+        {
+            return "Local file";
+        }
     }
 }

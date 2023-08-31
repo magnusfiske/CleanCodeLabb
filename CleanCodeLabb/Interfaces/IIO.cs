@@ -8,9 +8,10 @@ namespace CleanCodeLabb.Interfaces
 {
     internal interface IIO
     {
+        void SetIoStrategy(int input);
+        string GetIoStrategyOptions();
         void SetGameForResults(string gameName);
         string GenerateTopList();
-        List<Player> LoadResults();
         void SaveResult(string playerName, int numberOfGuesses);
     }
 }

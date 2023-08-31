@@ -19,6 +19,7 @@ namespace CleanCodeLabb
             this.ui = ui;
             this.game = game;
             this.io = io;
+            (this.game as ISubject).Attach(this.io as IObserver);
         }
 
 
@@ -34,12 +35,15 @@ namespace CleanCodeLabb
         {
             ui.PutString("Enter your user name:\n");
             playerName = ui.GetString();
-            ui.PutString(game.GetStrategyOptions());
+            ui.PutString(io.GetIoStrategyOptions());
             try
             {
-                int userInput = int.Parse(ui.GetString().Substring(0,1));
-                game.SetStrategy(userInput);
-                io.SetGameForResults(game.GetStrategy());
+                int userIoChoice = int.Parse(ui.GetString().Substring(0,1));
+                io.SetIoStrategy(userIoChoice);
+                ui.PutString(game.GetStrategyOptions());
+                int userGameChoice = int.Parse(ui.GetString().Substring(0,1));
+                game.SetStrategy(userGameChoice);
+                //io.SetGameForResults(game.GetStrategy());
             }
             catch(Exception e) 
             { 

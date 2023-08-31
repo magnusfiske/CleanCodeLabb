@@ -11,51 +11,27 @@ using Amazon.SecurityToken.Model;
 
 namespace CleanCodeLabb
 {
-    internal class MongoIO : IIO
+    internal class MongoDAO : IDAO
     {
         private readonly MongoClient dbClient;
         private readonly IMongoDatabase database;
-        private IMongoCollection<Player> players;
+        private IMongoCollection<Player>? players;
 
-        public MongoIO(string connectionstring, string database)
+        public MongoDAO(string connectionstring, string database)
         {
             var settings = MongoClientSettings.FromConnectionString(connectionstring);
             settings.ServerApi = new ServerApi(ServerApiVersion.V1);
             dbClient = new MongoClient(settings);
             this.database = dbClient.GetDatabase(database);
         }
-        public string GenerateTopList()
-        {
-            List<Player> results = LoadResults();
-            List<Player> sortedResults = sortResults(results);
 
-            return printTopList(sortedResults);
-
-        }
-
-        public List<Player> LoadResults()
+        public List<Player> ReadAll()
         {
             var results = players.Find(new BsonDocument());
             return new List<Player>(results.ToList());
         }
 
-        private List<Player> sortResults(List<Player> results)
-        {
-            results.Sort((p1, p2) => p1.CalculateAverage().CompareTo(p2.CalculateAverage()));
-            return results;
-        }
-
-        private string printTopList(List<Player> sortedResults)
-        {
-            string topList = "Player     games     average\n";
-            foreach (Player p in sortedResults)
-            {
-                topList += string.Format("{0,-9} {1,5:D} {2,9:F2}", p.PlayerName, p.NumberOfGames, p.CalculateAverage()) + "\n";
-            }
-            return topList;
-        }
-
-        public void SaveResult(string playerName, int numberOfGuesses)
+        public void Save(string playerName, int numberOfGuesses)
         {
             Player player;
             if (hasPreviousResults(playerName))
@@ -89,11 +65,15 @@ namespace CleanCodeLabb
 
             return players.UpdateOne(filter, update);
         }
-        public void SetGameForResults(string gameName)
+
+        public void SetResultTable(string gameName)
         {
             players = this.database.GetCollection<Player>(gameName);
         }
 
-        
+        public override string ToString()
+        {
+            return "MongoDb";
+        }
     }
 }
