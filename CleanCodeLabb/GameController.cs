@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CleanCodeLabb.Interfaces;
+﻿using CleanCodeLabb.Interfaces;
 
 namespace CleanCodeLabb
 {
@@ -19,7 +14,7 @@ namespace CleanCodeLabb
             _ui = ui;
             _game = game;
             _io = io;
-            (_game as ISubject).Attach(_io as IObserver); //Lämpligt ställa att ha den?
+            (_game as ISubject).Attach(_io as IObserver); //Lämpligt ställa att ha den??
         }
 
 
@@ -31,6 +26,7 @@ namespace CleanCodeLabb
                 gameLoop();
             } while (checkForUserContinue());
         }
+
         private void initializeGame()
         {
             _ui.PutString("Enter your user name:\n");
