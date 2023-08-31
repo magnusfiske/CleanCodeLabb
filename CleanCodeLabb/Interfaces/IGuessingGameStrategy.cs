@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CleanCodeLabb.Interfaces
 {
-    internal interface IGuessingGameStrategy
+    public interface IGuessingGameStrategy
     {
         int NumberOfUniqueDigitsInObjective { get; }
         bool IsValidNumber(string randomDigit, string gameObjective);

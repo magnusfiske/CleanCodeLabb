@@ -39,6 +39,7 @@ namespace CleanCodeLabb
             {
                 int userInput = int.Parse(ui.GetString().Substring(0,1));
                 game.SetStrategy(userInput);
+                io.SetGameForResults(game.GetStrategy());
             }
             catch(Exception e) 
             { 

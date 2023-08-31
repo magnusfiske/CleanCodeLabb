@@ -88,7 +88,7 @@ namespace CleanCodeLabb
 
         public override string ToString()
         {
-            return "Master Mind";
+            return "MasterMind";
         }
     }
 }

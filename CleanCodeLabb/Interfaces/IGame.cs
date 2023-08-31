@@ -10,6 +10,7 @@ namespace CleanCodeLabb.Interfaces
     {
         bool HasStrategyOptions { get; }
         int NumberOfGuesses { get; }
+        string GetStrategy();
         string GetStrategyOptions();
         void SetStrategy(int userInput);
         string NewGame();

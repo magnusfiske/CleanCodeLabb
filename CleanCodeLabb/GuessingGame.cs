@@ -12,11 +12,16 @@ namespace CleanCodeLabb
     {
         public string _gameObjective;
         private string _checkedGuess;
-        private IGuessingGameStrategy _strategy;
         private List<IGuessingGameStrategy> _strategyList = StrategyCreator.StrategyFactory();
+        private IGuessingGameStrategy _strategy;
 
         public bool HasStrategyOptions { get; } = true;
         public int NumberOfGuesses { get; private set; }
+
+        public string GetStrategy()
+        {
+            return _strategy.ToString();
+        }
 
         public string GetStrategyOptions()
         {

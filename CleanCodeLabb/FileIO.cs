@@ -5,12 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using CleanCodeLabb.Interfaces;
+using MongoDB.Bson.IO;
 
 namespace CleanCodeLabb
 {
     internal class FileIO : IIO
     {
         private string _separator = "#&#";
+        private string _fileName;
+
+        public void SetGameForResults(string gameName)
+        { 
+            _fileName = gameName + "Results.txt"; 
+        }
+
         public string GenerateTopList()
         {
             List<Player> resultsFromFile = LoadResults();
@@ -23,7 +31,7 @@ namespace CleanCodeLabb
         {
             try
             {
-                StreamReader input = new StreamReader("result.txt");
+                StreamReader input = new StreamReader(_fileName);
                 List<Player> results = new List<Player>();
                 string? fileContent;
 
@@ -99,7 +107,7 @@ namespace CleanCodeLabb
         {
             try
             {
-                StreamWriter output = new StreamWriter("result.txt", append: true);
+                StreamWriter output = new StreamWriter(_fileName, append: true);
                 output.WriteLine(playerName + _separator + numberOfGuesses);
                 output.Close();
             }
