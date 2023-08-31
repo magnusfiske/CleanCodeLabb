@@ -1,11 +1,12 @@
-﻿using CleanCodeLabb.Interfaces;
+﻿using CleanCodeLabb.GameLogic;
+using CleanCodeLabb.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanCodeLabb.GameLogic
+namespace CleanCodeLabb
 {
     static class StrategyCreator
     {

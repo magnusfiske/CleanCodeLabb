@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanCodeLabb
+namespace CleanCodeLabb.IO
 {
     internal class ioHandler : IIO, IObserver
     {
@@ -39,7 +39,7 @@ namespace CleanCodeLabb
             results.Sort((p1, p2) => p1.CalculateAverage().CompareTo(p2.CalculateAverage()));
             return results;
         }
-        
+
         private string printTopList(List<Player> sortedResults)
         {
             string topList = "Player     games     average\n";

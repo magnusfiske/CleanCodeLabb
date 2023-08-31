@@ -9,17 +9,17 @@ namespace CleanCodeLabb
 {
     internal class GameController
     {
-        private IUI ui;
-        private IGame game;
-        private string? playerName;
-        private IIO io;
+        private readonly IUI _ui;
+        private readonly IGame _game;
+        private readonly IIO _io;
+        private string playerName = string.Empty;
 
         public GameController(IUI ui, IGame game, IIO io)
         {
-            this.ui = ui;
-            this.game = game;
-            this.io = io;
-            (this.game as ISubject).Attach(this.io as IObserver);
+            _ui = ui;
+            _game = game;
+            _io = io;
+            (_game as ISubject).Attach(_io as IObserver); //Lämpligt ställa att ha den?
         }
 
 
@@ -33,48 +33,47 @@ namespace CleanCodeLabb
         }
         private void initializeGame()
         {
-            ui.PutString("Enter your user name:\n");
-            playerName = ui.GetString();
-            ui.PutString(io.GetIoStrategyOptions());
+            _ui.PutString("Enter your user name:\n");
+            playerName = _ui.GetString();
+            _ui.PutString(_io.GetIoStrategyOptions());
             try
             {
-                int userIoChoice = int.Parse(ui.GetString().Substring(0,1));
-                io.SetIoStrategy(userIoChoice);
-                ui.PutString(game.GetStrategyOptions());
-                int userGameChoice = int.Parse(ui.GetString().Substring(0,1));
-                game.SetStrategy(userGameChoice);
-                //io.SetGameForResults(game.GetStrategy());
+                int userIoChoice = int.Parse(_ui.GetString()[..1]);
+                _io.SetIoStrategy(userIoChoice);
+                _ui.PutString(_game.GetStrategyOptions());
+                int userGameChoice = int.Parse(_ui.GetString()[..1]);
+                _game.SetStrategy(userGameChoice);
             }
             catch(Exception e) 
             { 
-                ui.PutString(e.Message);
+                _ui.PutString(e.Message);
                 Run();
             }
         }
 
         private void gameLoop()
         {
-            ui.PutString(game.NewGame());
-            ui.PutString(game.Cheat());
+            _ui.PutString(_game.NewGame());
+            _ui.PutString(_game.Cheat());
             string input;
             do
             {
-                input = game.ValidateUserInput(ui.GetString().Trim());
-                ui.PutString(input + "\n");
-                ui.PutString(game.CheckResult(input));
+                input = _game.ValidateUserInput(_ui.GetString().Trim());
+                _ui.PutString(input + "\n");
+                _ui.PutString(_game.CheckResult(input));
 
-            } while (!game.IsWin());
-            io.SaveResult(playerName, game.NumberOfGuesses);
-            ui.PutString(io.GenerateTopList());
-            ui.PutString(game.CreateWinMessage());
+            } while (!_game.IsWin());
+            _io.SaveResult(playerName, _game.NumberOfGuesses);
+            _ui.PutString(_io.GenerateTopList());
+            _ui.PutString(_game.CreateWinMessage());
         }
 
 
         private bool checkForUserContinue()
         {
-            string userInput  = ui.GetString();
+            string userInput  = _ui.GetString();
 
-            if (userInput == "" || userInput == null ||  userInput.Substring(0, 1) == "n")
+            if (string.IsNullOrEmpty(userInput) ||  userInput[..1] == "n")
             {
                 return false;
             }

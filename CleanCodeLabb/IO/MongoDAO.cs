@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Amazon.SecurityToken.Model;
 
-namespace CleanCodeLabb
+namespace CleanCodeLabb.IO
 {
     internal class MongoDAO : IDAO
     {
@@ -39,7 +39,7 @@ namespace CleanCodeLabb
                 player = GetPlayer(playerName);
                 UpdatePlayer(player, numberOfGuesses);
             }
-            else 
+            else
             {
                 player = new Player(playerName, numberOfGuesses);
                 players.InsertOne(player);
@@ -68,7 +68,7 @@ namespace CleanCodeLabb
 
         public void SetResultTable(string gameName)
         {
-            players = this.database.GetCollection<Player>(gameName);
+            players = database.GetCollection<Player>(gameName);
         }
 
         public override string ToString()

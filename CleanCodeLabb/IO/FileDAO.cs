@@ -7,16 +7,16 @@ using System.Xml.Linq;
 using CleanCodeLabb.Interfaces;
 using MongoDB.Bson.IO;
 
-namespace CleanCodeLabb
+namespace CleanCodeLabb.IO
 {
     internal class FileDAO : IDAO
     {
         private string _separator = "#&#";
-        private string _fileName;
+        private string _fileName = string.Empty;
 
         public void SetResultTable(string gameName)
-        { 
-            _fileName = gameName + "Results.txt"; 
+        {
+            _fileName = gameName + "Results.txt";
         }
 
         public List<Player> ReadAll()
