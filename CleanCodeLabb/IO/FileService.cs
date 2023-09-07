@@ -2,7 +2,7 @@
 
 namespace CleanCodeLabb.IO
 {
-    public class FileDAO : IDAO
+    public class FileService : IIoService
     {
         private string _separator = "#&#";
         private string _fileName = string.Empty;

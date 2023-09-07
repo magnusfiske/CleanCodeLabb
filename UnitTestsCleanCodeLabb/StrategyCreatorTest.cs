@@ -27,10 +27,10 @@ namespace UnitTestsCleanCodeLabb
         [TestMethod]
         public void TestIoStrategyFactory() 
         {
-            List<IDAO> actual = StrategyCreator.CreateIoStrategies();
+            List<IIoService> actual = StrategyCreator.CreateIoStrategies();
 
             Assert.AreEqual(2, actual.Count);
-            Assert.IsInstanceOfType(actual[0], typeof(FileDAO));
+            Assert.IsInstanceOfType(actual[0], typeof(FileService));
             Assert.IsInstanceOfType(actual[1], typeof(MongoDAO));
         }
     }

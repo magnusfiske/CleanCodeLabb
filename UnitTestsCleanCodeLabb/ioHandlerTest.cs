@@ -13,8 +13,7 @@ namespace UnitTestsCleanCodeLabb
         [TestInitialize]
         public void CreateIoHandlerAndSetFileStrategy()
         {
-            ioHandler handler = new ioHandler();
-            handler.SetIoStrategy(0);
+            ioHandler handler = new ioHandler(new FileService());
         }
     }
 }

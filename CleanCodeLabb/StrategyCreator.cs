@@ -18,16 +18,11 @@ namespace CleanCodeLabb
             return typeof(T).IsAssignableFrom(t) && t.IsClass;
         }
 
+        //Returns instances of all strategies in assembly
         public static List<IGuessingGameStrategy> CreateGameStrategies()
         {
             IEnumerable<Type> gameStrategyTypes = Assembly.GetExecutingAssembly().GetTypes().Where(IsStrategy<IGuessingGameStrategy>);
             return gameStrategyTypes.Select(Instantiate<IGuessingGameStrategy>).ToList();
-        }
-
-        public static List<IDAO> CreateIoStrategies()
-        {
-            IEnumerable<Type> ioStrategyTypes = Assembly.GetExecutingAssembly().GetTypes().Where(IsStrategy<IDAO>);
-            return ioStrategyTypes.Select(Instantiate<IDAO>).ToList();
         }
     }
 }

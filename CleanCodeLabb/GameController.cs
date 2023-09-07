@@ -14,7 +14,6 @@ namespace CleanCodeLabb
             _ui = ui;
             _game = game;
             _io = io;
-            (_game as ISubject).Attach(_io as IObserver); //Lämpligt ställa att ha den??
         }
 
 
@@ -31,14 +30,12 @@ namespace CleanCodeLabb
         {
             _ui.PutString("Enter your user name:\n");
             playerName = _ui.GetString();
-            _ui.PutString(_io.GetIoStrategyOptions());
             try
             {
-                int userIoChoice = int.Parse(_ui.GetString()[..1]);
-                _io.SetIoStrategy(userIoChoice);
                 _ui.PutString(_game.GetStrategyOptions());
                 int userGameChoice = int.Parse(_ui.GetString()[..1]);
                 _game.SetStrategy(userGameChoice);
+                _io.SetGameForResults(_game.GetStrategy());
             }
             catch(Exception e) 
             { 

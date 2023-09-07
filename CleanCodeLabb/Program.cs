@@ -6,8 +6,8 @@ using CleanCodeLabb.GameLogic;
 using CleanCodeLabb.IO;
 
 
-
-IIO io = new ioHandler();
+IIoService fileService = new FileService();
+IIO io = new ioHandler(fileService);
 IGame game = new GuessingGame();
 IUI ui = new ConsoleUI();
 GameController controller = new GameController(ui, game, io);

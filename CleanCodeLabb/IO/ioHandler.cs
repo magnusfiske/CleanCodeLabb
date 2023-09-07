@@ -3,27 +3,18 @@ using CleanCodeLabb.Interfaces;
 
 namespace CleanCodeLabb.IO
 {
-    public class ioHandler : IIO, IObserver
+    public class ioHandler : IIO
     {
-        private IDAO _ioStrategy;
-        private List<IDAO> _ioList = StrategyCreator.CreateIoStrategies();
+        private IIoService _ioService;
 
-        public string GetIoStrategyOptions()
+        public ioHandler(IIoService ioService)
         {
-            string strategyOptions = "Save results to: \n";
-            for (int i = 0; i < _ioList.Count; i++)
-            {
-                strategyOptions += $"{i}. {_ioList[i].ToString()} \n";
-            }
-            return strategyOptions;
+            _ioService = ioService;
         }
-        public void SetIoStrategy(int userInput)
-        {
-            _ioStrategy = _ioList[userInput];
-        }
+
         public string GenerateTopList()
         {
-            List<Player> results = _ioStrategy.ReadAll();
+            List<Player> results = _ioService.ReadAll();
             List<Player> sortedResults = SortResults(results);
 
             return PrintTopList(sortedResults);
@@ -47,17 +38,12 @@ namespace CleanCodeLabb.IO
 
         public void SaveResult(string playerName, int numberOfGuesses)
         {
-            _ioStrategy.Save(playerName, numberOfGuesses);
+            _ioService.Save(playerName, numberOfGuesses);
         }
 
         public void SetGameForResults(string gameName)
         {
-            _ioStrategy.SetResultTable(gameName);
-        }
-
-        public void Update(ISubject subject)
-        {
-            _ioStrategy.SetResultTable((subject as GuessingGame).GetStrategy());
+            _ioService.SetResultTable(gameName);
         }
     }
 }
