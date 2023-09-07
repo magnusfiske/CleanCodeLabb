@@ -23,15 +23,5 @@ namespace UnitTestsCleanCodeLabb
             Assert.IsInstanceOfType(actual[0], typeof(MasterMindStrategy));
             Assert.IsInstanceOfType(actual[1], typeof(MooGameStrategy));
         }
-
-        [TestMethod]
-        public void TestIoStrategyFactory() 
-        {
-            List<IIoService> actual = StrategyCreator.CreateIoStrategies();
-
-            Assert.AreEqual(2, actual.Count);
-            Assert.IsInstanceOfType(actual[0], typeof(FileService));
-            Assert.IsInstanceOfType(actual[1], typeof(MongoDAO));
-        }
     }
 }

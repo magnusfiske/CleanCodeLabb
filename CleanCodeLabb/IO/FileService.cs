@@ -12,7 +12,7 @@ namespace CleanCodeLabb.IO
             _fileName = gameName + "Results.txt";
         }
 
-        public List<Player> ReadAll()
+        public List<Player> GetAllResults()
         {
             try
             {

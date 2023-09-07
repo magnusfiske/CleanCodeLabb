@@ -14,7 +14,7 @@ namespace CleanCodeLabb.IO
 
         public string GenerateTopList()
         {
-            List<Player> results = _ioService.ReadAll();
+            List<Player> results = _ioService.GetAllResults();
             List<Player> sortedResults = SortResults(results);
 
             return PrintTopList(sortedResults);

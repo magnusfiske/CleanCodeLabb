@@ -2,14 +2,13 @@
 
 namespace CleanCodeLabb.GameLogic
 {
-    public class GuessingGame : IGame, ISubject
+    public class GuessingGame : IGame
     {
         //public for testing access
         public string _gameObjective = string.Empty;
         private string _checkedGuess = string.Empty;
         private readonly List<IGuessingGameStrategy> _strategyList = StrategyCreator.CreateGameStrategies();
         private IGuessingGameStrategy _strategy;
-        private List<IObserver> _observers = new List<IObserver>();
 
         public bool HasStrategyOptions { get; } = true;
         public int NumberOfGuesses { get; private set; }
@@ -32,7 +31,6 @@ namespace CleanCodeLabb.GameLogic
         public void SetStrategy(int userStrategyChoice)
         {
             _strategy = _strategyList[userStrategyChoice];
-            Notify();
         }
 
         public string NewGame()
@@ -92,24 +90,6 @@ namespace CleanCodeLabb.GameLogic
         public string Cheat()
         {
             return _gameObjective;
-        }
-
-        public void Attach(IObserver observer)
-        {
-            _observers.Add(observer);
-        }
-
-        public void Detach(IObserver observer)
-        {
-            _observers.Remove(observer);
-        }
-
-        public void Notify()
-        {
-            foreach (var observer in _observers)
-            {
-                observer.Update(this);
-            }
         }
     }
 }

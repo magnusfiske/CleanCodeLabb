@@ -14,7 +14,6 @@ namespace CleanCodeLabb
         public int TotalNumberOfGuesses { get; private set; }
         public string PlayerName { get; private set; }
         public int NumberOfGames { get; private set; }
-        public ObjectId Id { get; private set; }
 
         public void UpdatePlayerRecord(int guesses)
         {
@@ -33,9 +32,9 @@ namespace CleanCodeLabb
             return PlayerName.Equals(other.PlayerName);
         }
 
-        public override int GetHashCode()
-        {
-            return PlayerName.GetHashCode();
-        }
+        //public override int GetHashCode()
+        //{
+        //    return PlayerName.GetHashCode();
+        //}
     }
 }

@@ -10,23 +10,23 @@ using DnsClient;
 namespace UnitTestsCleanCodeLabb
 {
     [TestClass]
-    public class FileDAOTest
+    public class FileServiceTest
     {
-        FileDAO _dao;
+        FileService _service;
 
         [TestInitialize]
         public void CreateFileDAOAndMockFile()
         {
-            _dao = new FileDAO();
-            _dao.SetResultTable("test");
+            _service = new FileService();
+            _service.SetResultTable("test");
         }
 
         [TestMethod]
         public void TestSaveAndReadOnePlayerOneGame()
         {
-            _dao.Save("testPlayer", 5);
+            _service.Save("testPlayer", 5);
 
-            List<Player> actual = _dao.ReadAll();
+            List<Player> actual = _service.GetAllResults();
 
             Assert.AreEqual(1, actual.Count);
             Assert.AreEqual("testPlayer", actual[0].PlayerName);
@@ -36,10 +36,10 @@ namespace UnitTestsCleanCodeLabb
         [TestMethod]
         public void TestUpdatePlayer() 
         {
-            _dao.Save("testPlayer", 5);
-            _dao.Save("testPlayer", 7);
+            _service.Save("testPlayer", 5);
+            _service.Save("testPlayer", 7);
 
-            List<Player> actual = _dao.ReadAll();
+            List<Player> actual = _service.GetAllResults();
 
             Assert.AreEqual(1, actual.Count);
             Assert.AreEqual("testPlayer", actual[0].PlayerName);
@@ -49,13 +49,13 @@ namespace UnitTestsCleanCodeLabb
         [TestMethod]
         public void TestSaveAndReadMultiplePlayers()
         {
-            _dao.Save("testPlayer", 5);
-            _dao.Save("testPlayer2", 7);
-            _dao.Save("testPlayer", 7);
-            _dao.Save("testPlayer2", 8);
+            _service.Save("testPlayer", 5);
+            _service.Save("testPlayer2", 7);
+            _service.Save("testPlayer", 7);
+            _service.Save("testPlayer2", 8);
 
 
-            List<Player> actual = _dao.ReadAll();
+            List<Player> actual = _service.GetAllResults();
 
             Assert.AreEqual(2, actual.Count);
             Assert.AreEqual("testPlayer2", actual[1].PlayerName);
