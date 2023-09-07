@@ -22,7 +22,7 @@ namespace UnitTestsCleanCodeLabb
         [TestMethod]
         public void testMasterCreateGameObjective()
         {
-            _guessingGame.SetStrategy(2);
+            _guessingGame.SetStrategy(0);
             _guessingGame.NewGame();
 
             Regex regex = new Regex("^[0-5]{4}$");

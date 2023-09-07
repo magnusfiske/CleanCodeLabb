@@ -16,24 +16,22 @@ namespace CleanCodeLabb
         public int NumberOfGames { get; private set; }
         public ObjectId Id { get; private set; }
 
-        public void Update(int guesses)
+        public void UpdatePlayerRecord(int guesses)
         {
             TotalNumberOfGuesses += guesses;
             NumberOfGames++;
         }
 
-        public double CalculateAverage()
+        public double CalculateAverageNumberOfGuesses()
         {
             return (double)TotalNumberOfGuesses / NumberOfGames;
         }
 
-        
         public override bool Equals(Object player)
         {
             Player other = (Player)player;
             return PlayerName.Equals(other.PlayerName);
         }
-
 
         public override int GetHashCode()
         {

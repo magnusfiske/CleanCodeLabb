@@ -2,7 +2,7 @@
 
 namespace CleanCodeLabb.IO
 {
-    internal class FileDAO : IDAO
+    public class FileDAO : IDAO
     {
         private string _separator = "#&#";
         private string _fileName = string.Empty;
@@ -22,8 +22,8 @@ namespace CleanCodeLabb.IO
 
                 while ((fileContent = input.ReadLine()) != null)
                 {
-                    Player playerData = getPlayerFromFile(fileContent);
-                    addOrUpdatePlayer(results, playerData);
+                    Player playerData = GetPlayerFromFile(fileContent);
+                    AddOrUpdatePlayer(results, playerData);
                 }
                 input.Close();
                 return results;
@@ -45,15 +45,15 @@ namespace CleanCodeLabb.IO
             }
         }
 
-        private Player getPlayerFromFile(string fileContent)
+        private Player GetPlayerFromFile(string fileContent)
         {
-            string[] namesAndScores = splitFileContentToArray(fileContent);
+            string[] namesAndScores = SplitFileContentToArray(fileContent);
             string name = namesAndScores[0];
             int guesses = Convert.ToInt32(namesAndScores[1]);
             return new Player(name, guesses);
         }
 
-        private List<Player> addOrUpdatePlayer(List<Player> results, Player playerData)
+        private List<Player> AddOrUpdatePlayer(List<Player> results, Player playerData)
         {
             int pos = results.IndexOf(playerData);
             if (pos < 0)
@@ -62,12 +62,12 @@ namespace CleanCodeLabb.IO
             }
             else
             {
-                results[pos].Update(playerData.TotalNumberOfGuesses);
+                results[pos].UpdatePlayerRecord(playerData.TotalNumberOfGuesses);
             }
             return results;
         }
 
-        private string[] splitFileContentToArray(string fileContent)
+        private string[] SplitFileContentToArray(string fileContent)
         {
             return fileContent.Split(new string[] { _separator }, StringSplitOptions.None);
         }

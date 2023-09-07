@@ -14,7 +14,7 @@ public class PlayerTest
     [TestMethod]
     public void TestUpdate()
     {
-        _player.Update(5);
+        _player.UpdatePlayerRecord(5);
 
         Assert.AreEqual(5, _player.TotalNumberOfGuesses);
         Assert.AreEqual(2, _player.NumberOfGames);
@@ -23,10 +23,10 @@ public class PlayerTest
     [TestMethod]
     public void TestCalculateAverage()
     {
-        _player.Update(5);
-        _player.CalculateAverage();
+        _player.UpdatePlayerRecord(5);
 
-        Assert.AreEqual(2.5, _player.CalculateAverage());
+
+        Assert.AreEqual(2.5, _player.CalculateAverageNumberOfGuesses());
     }
 
     [TestMethod]

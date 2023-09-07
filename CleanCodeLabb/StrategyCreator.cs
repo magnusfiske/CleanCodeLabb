@@ -1,20 +1,33 @@
 ﻿using CleanCodeLabb.GameLogic;
 using CleanCodeLabb.Interfaces;
 using CleanCodeLabb.IO;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace CleanCodeLabb
 {
-    static class StrategyCreator
+    public class StrategyCreator
     {
-        public static List<IGuessingGameStrategy> GameStrategyFactory()
+        static T Instantiate<T>(Type t)
         {
-            return new List<IGuessingGameStrategy> { new MooGameStrategy(), new MasterMindStrategy() };
+            return (T)Activator.CreateInstance(t);
         }
 
-        public static List<IDAO> IoStrategyFactory()
+        static bool IsStrategy<T>(Type t)
         {
-            return new List<IDAO> { new FileDAO(),
-                new MongoDAO("mongodb+srv://magnusfiske:supersecretPassWord@clusterfiske.8tkqxzs.mongodb.net/?retryWrites=true&w=majority", "GameResults") };
+            return typeof(T).IsAssignableFrom(t) && t.IsClass;
+        }
+
+        public static List<IGuessingGameStrategy> CreateGameStrategies()
+        {
+            IEnumerable<Type> gameStrategyTypes = Assembly.GetExecutingAssembly().GetTypes().Where(IsStrategy<IGuessingGameStrategy>);
+            return gameStrategyTypes.Select(Instantiate<IGuessingGameStrategy>).ToList();
+        }
+
+        public static List<IDAO> CreateIoStrategies()
+        {
+            IEnumerable<Type> ioStrategyTypes = Assembly.GetExecutingAssembly().GetTypes().Where(IsStrategy<IDAO>);
+            return ioStrategyTypes.Select(Instantiate<IDAO>).ToList();
         }
     }
 }

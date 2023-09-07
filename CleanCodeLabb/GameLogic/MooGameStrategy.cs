@@ -33,10 +33,10 @@ namespace CleanCodeLabb.GameLogic
                 }
             }
 
-            return printCheckedGuess(rightPlaceRightValue, wrongPlaceRightValue);
+            return PrintCheckedGuess(rightPlaceRightValue, wrongPlaceRightValue);
         }
 
-        private string printCheckedGuess(int rightPlaceRightValue, int wrongPlaceRightValue)
+        private string PrintCheckedGuess(int rightPlaceRightValue, int wrongPlaceRightValue)
         {
             return "BBBB".Substring(0, rightPlaceRightValue) + "," + "CCCC".Substring(0, wrongPlaceRightValue);
         }

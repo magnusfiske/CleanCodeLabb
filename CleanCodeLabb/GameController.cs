@@ -20,14 +20,14 @@ namespace CleanCodeLabb
 
         public void Run()
         {
-            initializeGame();
+            InitializeGame();
             do
             {
-                gameLoop();
-            } while (checkForUserContinue());
+                GameLoop();
+            } while (CheckForUserContinue());
         }
 
-        private void initializeGame()
+        private void InitializeGame()
         {
             _ui.PutString("Enter your user name:\n");
             playerName = _ui.GetString();
@@ -47,16 +47,16 @@ namespace CleanCodeLabb
             }
         }
 
-        private void gameLoop()
+        private void GameLoop()
         {
             _ui.PutString(_game.NewGame());
             _ui.PutString(_game.Cheat());
-            string input;
+            string userGuess;
             do
             {
-                input = _game.ValidateUserInput(_ui.GetString().Trim());
-                _ui.PutString(input + "\n");
-                _ui.PutString(_game.CheckResult(input));
+                userGuess = _game.ValidateUserInput(_ui.GetString().Trim());
+                _ui.PutString(userGuess + "\n");
+                _ui.PutString(_game.CheckResult(userGuess));
 
             } while (!_game.IsWin());
             _io.SaveResult(playerName, _game.NumberOfGuesses);
@@ -65,11 +65,11 @@ namespace CleanCodeLabb
         }
 
 
-        private bool checkForUserContinue()
+        private bool CheckForUserContinue()
         {
-            string userInput  = _ui.GetString();
+            string userContinueChoice  = _ui.GetString();
 
-            if (string.IsNullOrEmpty(userInput) ||  userInput[..1] == "n")
+            if (string.IsNullOrEmpty(userContinueChoice) ||  userContinueChoice[..1] == "n")
             {
                 return false;
             }

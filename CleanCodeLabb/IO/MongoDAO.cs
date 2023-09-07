@@ -1,21 +1,23 @@
 ﻿using CleanCodeLabb.Interfaces;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using Microsoft.Extensions.Configuration;
 
 namespace CleanCodeLabb.IO
 {
-    internal class MongoDAO : IDAO
+    public class MongoDAO : IDAO
     {
         private readonly MongoClient dbClient;
         private readonly IMongoDatabase database;
         private IMongoCollection<Player>? players;
 
-        public MongoDAO(string connectionstring, string database)
+        public MongoDAO()
         {
-            var settings = MongoClientSettings.FromConnectionString(connectionstring);
+            string connectionString = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("MongoSettings")["ConnectionString"];
+            MongoClientSettings settings = MongoClientSettings.FromConnectionString(connectionString);
             settings.ServerApi = new ServerApi(ServerApiVersion.V1);
             dbClient = new MongoClient(settings);
-            this.database = dbClient.GetDatabase(database);
+            this.database = dbClient.GetDatabase("GameResults");
         }
 
         public List<Player> ReadAll()
@@ -27,7 +29,7 @@ namespace CleanCodeLabb.IO
         public void Save(string playerName, int numberOfGuesses)
         {
             Player player;
-            if (hasPreviousResults(playerName))
+            if (HasPreviousResults(playerName))
             {
                 player = GetPlayer(playerName);
                 UpdatePlayer(player, numberOfGuesses);
@@ -39,7 +41,7 @@ namespace CleanCodeLabb.IO
             }
         }
 
-        private bool hasPreviousResults(string playerName)
+        private bool HasPreviousResults(string playerName)
         {
             return players.AsQueryable().Any(player => player.PlayerName == playerName);
         }

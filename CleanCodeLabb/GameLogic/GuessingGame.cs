@@ -4,9 +4,10 @@ namespace CleanCodeLabb.GameLogic
 {
     public class GuessingGame : IGame, ISubject
     {
+        //public for testing access
         public string _gameObjective = string.Empty;
         private string _checkedGuess = string.Empty;
-        private List<IGuessingGameStrategy> _strategyList = StrategyCreator.GameStrategyFactory();
+        private readonly List<IGuessingGameStrategy> _strategyList = StrategyCreator.CreateGameStrategies();
         private IGuessingGameStrategy _strategy;
         private List<IObserver> _observers = new List<IObserver>();
 
@@ -28,21 +29,21 @@ namespace CleanCodeLabb.GameLogic
             return strategyOptions;
         }
 
-        public void SetStrategy(int userInput)
+        public void SetStrategy(int userStrategyChoice)
         {
-            _strategy = _strategyList[userInput];
+            _strategy = _strategyList[userStrategyChoice];
             Notify();
         }
 
         public string NewGame()
         {
             _gameObjective = string.Empty;
-            createGameObjective();
-            resetNumberOfGuesses();
+            CreateGameObjective();
+            ResetNumberOfGuesses();
             return "New Game:\n";
         }
 
-        private void createGameObjective()
+        private void CreateGameObjective()
         {
             Random randomGenerator = new Random();
             while (_gameObjective?.Length < 4)
@@ -55,6 +56,11 @@ namespace CleanCodeLabb.GameLogic
             }
         }
 
+        private void ResetNumberOfGuesses()
+        {
+            NumberOfGuesses = 0;
+        }
+
         public string ValidateUserInput(string input)
         {
             int lengthOfValidGuess = 4;
@@ -63,11 +69,6 @@ namespace CleanCodeLabb.GameLogic
                 input += "    ";
             }
             return input.Remove(lengthOfValidGuess);
-        }
-
-        private void resetNumberOfGuesses()
-        {
-            NumberOfGuesses = 0;
         }
 
         public string CheckResult(string guess)

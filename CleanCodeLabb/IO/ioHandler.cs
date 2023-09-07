@@ -3,10 +3,10 @@ using CleanCodeLabb.Interfaces;
 
 namespace CleanCodeLabb.IO
 {
-    internal class ioHandler : IIO, IObserver
+    public class ioHandler : IIO, IObserver
     {
         private IDAO _ioStrategy;
-        private List<IDAO> _ioList = StrategyCreator.IoStrategyFactory();
+        private List<IDAO> _ioList = StrategyCreator.CreateIoStrategies();
 
         public string GetIoStrategyOptions()
         {
@@ -24,23 +24,23 @@ namespace CleanCodeLabb.IO
         public string GenerateTopList()
         {
             List<Player> results = _ioStrategy.ReadAll();
-            List<Player> sortedResults = sortResults(results);
+            List<Player> sortedResults = SortResults(results);
 
-            return printTopList(sortedResults);
+            return PrintTopList(sortedResults);
         }
 
-        private List<Player> sortResults(List<Player> results)
+        private List<Player> SortResults(List<Player> results)
         {
-            results.Sort((p1, p2) => p1.CalculateAverage().CompareTo(p2.CalculateAverage()));
+            results.Sort((p1, p2) => p1.CalculateAverageNumberOfGuesses().CompareTo(p2.CalculateAverageNumberOfGuesses()));
             return results;
         }
 
-        private string printTopList(List<Player> sortedResults)
+        private string PrintTopList(List<Player> sortedResults)
         {
             string topList = "Player     games     average\n";
             foreach (Player p in sortedResults)
             {
-                topList += string.Format("{0,-9} {1,5:D} {2,9:F2}", p.PlayerName, p.NumberOfGames, p.CalculateAverage()) + "\n";
+                topList += string.Format("{0,-9} {1,5:D} {2,9:F2}", p.PlayerName, p.NumberOfGames, p.CalculateAverageNumberOfGuesses()) + "\n";
             }
             return topList;
         }

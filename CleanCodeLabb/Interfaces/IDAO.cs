@@ -1,6 +1,6 @@
 ﻿namespace CleanCodeLabb.Interfaces
 {
-    internal interface IDAO
+    public interface IDAO
     {
         List<Player> ReadAll();
         void Save(string playerName, int numberOfGuesses);

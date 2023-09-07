@@ -22,15 +22,15 @@ namespace CleanCodeLabb.GameLogic
         {
             _gameObjective = gameObjective;
             _guess = guess;
-            resetCounters();
+            ResetCounters();
 
-            countRightPlaceRightValue();
-            countWrongPlaceRightValue();
+            CountRightPlaceRightValue();
+            CountWrongPlaceRightValue();
 
-            return printCheckedGuess(_rightPlaceRightValue, _wrongPlaceRightValue);
+            return PrintCheckedGuess(_rightPlaceRightValue, _wrongPlaceRightValue);
         }
 
-        private void resetCounters()
+        private void ResetCounters()
         {
             _iteration = 0;
             _rightPlaceRightValue = 0;
@@ -43,7 +43,7 @@ namespace CleanCodeLabb.GameLogic
             }
         }
 
-        private void countRightPlaceRightValue()
+        private void CountRightPlaceRightValue()
         {
             for (int i = 0; i < 4; i++)
             {
@@ -57,11 +57,13 @@ namespace CleanCodeLabb.GameLogic
             }
         }
 
-        private void countWrongPlaceRightValue()
+        private void CountWrongPlaceRightValue()
         {
             for (int i = 0; i < 4; i++)
             {
-                bool isWrongPlaceRightValue = _guess[i] == _gameObjective[_iteration] && _checkedGuessPositions[i] < 0 && _checkedObjectivePositions[_iteration] < 0;
+                bool isWrongPlaceRightValue = _guess[i] == _gameObjective[_iteration] 
+                    && _checkedGuessPositions[i] < 0 
+                    && _checkedObjectivePositions[_iteration] < 0;
                 if (isWrongPlaceRightValue)
                 {
                     _wrongPlaceRightValue++;
@@ -72,11 +74,11 @@ namespace CleanCodeLabb.GameLogic
             _iteration++;
             if (_iteration < 4)
             {
-                countWrongPlaceRightValue();
+                CountWrongPlaceRightValue();
             }
         }
 
-        private string printCheckedGuess(int rightPlaceRightValue, int wrongPlaceRightValue)
+        private string PrintCheckedGuess(int rightPlaceRightValue, int wrongPlaceRightValue)
         {
             return "RRRR".Substring(0, rightPlaceRightValue) + "," + "WWWW".Substring(0, wrongPlaceRightValue);
         }
